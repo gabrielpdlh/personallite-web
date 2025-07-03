@@ -3,7 +3,13 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Card, CardContent } from "@/components/ui/card";
+import {
+  Card,
+  CardAction,
+  CardContent,
+  CardDescription,
+  CardTitle,
+} from "@/components/ui/card";
 import {
   ChevronLeft,
   ChevronRight,
@@ -13,64 +19,9 @@ import {
   Zap,
 } from "lucide-react";
 import Image from "next/image";
+import { stores } from "./_constants";
 
-const heroImages = [
-  "/placeholder.svg?height=600&width=1200",
-  "/placeholder.svg?height=600&width=1200",
-  "/placeholder.svg?height=600&width=1200",
-  "/placeholder.svg?height=600&width=1200",
-];
-
-const stores = [
-  {
-    id: 1,
-    name: "Unidade Shopping Center",
-    image: "/placeholder.svg?height=200&width=300",
-    phone: "(11) 1234-5678",
-  },
-  {
-    id: 2,
-    name: "Unidade Centro",
-    image: "/placeholder.svg?height=200&width=300",
-    phone: "(11) 2345-6789",
-  },
-  {
-    id: 3,
-    name: "Unidade Jardins",
-    image: "/placeholder.svg?height=200&width=300",
-    phone: "(11) 3456-7890",
-  },
-  {
-    id: 4,
-    name: "Unidade Vila Madalena",
-    image: "/placeholder.svg?height=200&width=300",
-    phone: "(11) 4567-8901",
-  },
-  {
-    id: 5,
-    name: "Unidade Moema",
-    image: "/placeholder.svg?height=200&width=300",
-    phone: "(11) 5678-9012",
-  },
-  {
-    id: 6,
-    name: "Unidade Pinheiros",
-    image: "/placeholder.svg?height=200&width=300",
-    phone: "(11) 6789-0123",
-  },
-  {
-    id: 7,
-    name: "Unidade Itaim Bibi",
-    image: "/placeholder.svg?height=200&width=300",
-    phone: "(11) 7890-1234",
-  },
-  {
-    id: 8,
-    name: "Unidade Brooklin",
-    image: "/placeholder.svg?height=200&width=300",
-    phone: "(11) 8901-2345",
-  },
-];
+const heroImages = ["/hero1.png", "/hero2.png"];
 
 const brands = [
   "Prada",
@@ -122,11 +73,9 @@ export default function LandingPage() {
                 className="object-cover"
                 priority={index === 0}
               />
-              <div className="absolute inset-0 bg-black bg-opacity-30" />
             </div>
           ))}
 
-          {/* Carousel Controls */}
           <button
             onClick={prevSlide}
             className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-20 hover:bg-opacity-30 rounded-full p-2 transition-all"
@@ -142,7 +91,6 @@ export default function LandingPage() {
             <ChevronRight className="w-6 h-6 text-white" />
           </button>
 
-          {/* Carousel Indicators */}
           <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
             {heroImages.map((_, index) => (
               <button
@@ -154,26 +102,6 @@ export default function LandingPage() {
                 aria-label={`Go to slide ${index + 1}`}
               />
             ))}
-          </div>
-
-          <div className="absolute inset-0 flex items-center justify-center">
-            <div className="text-center text-white max-w-4xl px-4">
-              <h2 className="text-4xl md:text-6xl font-bold mb-6 leading-tight">
-                Visão Personalizada,
-                <br />
-                <span className="text-[#0b4d4c]">Estilo Único</span>
-              </h2>
-              <p className="text-xl md:text-2xl mb-8 opacity-90">
-                Descubra a combinação perfeita entre tecnologia avançada e
-                design sofisticado
-              </p>
-              <Button
-                size="lg"
-                className="bg-[#0b4d4c] hover:bg-[#0a3f3e] text-white px-8 py-3 text-lg transition-all transform hover:scale-105"
-              >
-                Encontre Sua Unidade
-              </Button>
-            </div>
           </div>
         </div>
       </section>
@@ -195,7 +123,7 @@ export default function LandingPage() {
             {stores.map((store) => (
               <Card
                 key={store.id}
-                className="group hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1"
+                className="group hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 "
               >
                 <CardContent className="p-0">
                   <div className="relative h-48 overflow-hidden rounded-t-lg">
@@ -206,20 +134,48 @@ export default function LandingPage() {
                       className="object-cover group-hover:scale-105 transition-transform duration-300"
                     />
                   </div>
-                  <div className="p-6">
-                    <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                      {store.name}
-                    </h3>
-                    <p className="text-gray-600 mb-4 flex items-center">
-                      <Phone className="w-4 h-4 mr-2" />
-                      {store.phone}
-                    </p>
-                    <Button
-                      className="w-full bg-[#0b4d4c] hover:bg-[#0a3f3e] text-white transition-colors"
-                      size="sm"
-                    >
-                      Entrar em Contato
-                    </Button>
+                  <div className="pt-6 pr-6 pl-6">
+                    <CardTitle>
+                      <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                        {store.name}
+                      </h3>
+                    </CardTitle>
+                    <CardDescription>
+                      <p className="text-gray-600 mb-4 flex items-center">
+                        <MapPin className="w-4 h-4 mr-2" />
+                        {store.adress}
+                      </p>
+                      <p className="text-gray-600 mb-4 flex items-center jus">
+                        <Phone className="w-4 h-4 mr-2" />
+                        {store.phone}
+                      </p>
+                    </CardDescription>
+
+                    <CardAction className="w-full">
+                      <a
+                        href={store.mapLink}
+                        target="blank"
+                        rel="noopener noreferrer"
+                      >
+                        <Button
+                          className="w-full hover:bg-[#0b4d4c] text-[#0a3f3e] hover:text-white transition-colors mb-2"
+                          size="sm"
+                          variant="outline"
+                        >
+                          Como chegar
+                        </Button>
+                      </a>
+                      <a
+                        href={store.linkToWhatsapp}
+                        target="blank"
+                        rel="noopener noreferrer"
+                      >
+                        <Button
+                          className="w-full bg-[#0b4d4c] hover:bg-[#0a3f3e] text-white transition-colors"
+                          size="sm"
+                        >Fale Conosco</Button>
+                      </a>
+                    </CardAction>
                   </div>
                 </CardContent>
               </Card>
